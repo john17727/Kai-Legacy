@@ -4,7 +4,7 @@ import com.example.kai.business.domain.state.StateEvent
 
 sealed class TopHeadlinesStateEvent: StateEvent {
 
-    class GetTopHeadlinesEvent(val country: String): TopHeadlinesStateEvent() {
+    class GetTopHeadlinesEvent() : TopHeadlinesStateEvent() {
         override fun errorInfo(): String {
             return "Could not fetch news at this time"
         }
