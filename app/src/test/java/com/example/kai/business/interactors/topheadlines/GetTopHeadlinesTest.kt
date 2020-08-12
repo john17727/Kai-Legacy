@@ -46,11 +46,6 @@ class GetTopHeadlinesTest {
     @Test
     fun success_confirmHeadlinesRetrieved() = runBlocking {
 
-        getTopHeadlines = GetTopHeadlines(
-            articleCacheDataSource,
-            dependencyContainer.getFullNetworkDataSource()
-        )
-
         getTopHeadlines.getTopHeadlines(
             "us",
             1,
@@ -58,8 +53,8 @@ class GetTopHeadlinesTest {
         ).collect(object : FlowCollector<DataState<TopHeadlinesViewState>>{
             override suspend fun emit(value: DataState<TopHeadlinesViewState>) {
                 assertEquals(
-                    value.stateMessage?.response?.message,
-                    ARTICLES_SUCCESS
+                    ARTICLES_SUCCESS,
+                    value.stateMessage?.response?.message
                 )
             }
         })
@@ -80,8 +75,8 @@ class GetTopHeadlinesTest {
         ).collect(object : FlowCollector<DataState<TopHeadlinesViewState>>{
             override suspend fun emit(value: DataState<TopHeadlinesViewState>) {
                 assertEquals(
-                    value.stateMessage?.response?.message,
-                    NO_MORE_ARTICLES
+                    NO_MORE_ARTICLES,
+                    value.stateMessage?.response?.message
                 )
             }
         })

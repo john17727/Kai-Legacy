@@ -33,6 +33,10 @@ android {
         jvmTarget = "1.8"
     }
 
+    sourceSets {
+        test.resources.srcDirs += "sampledata"
+    }
+
     testOptions {
         unitTests.all {
             useJunitPlatform()

@@ -1,5 +1,6 @@
 package com.example.kai.di
 
+import com.example.kai.business.data.ArticleDataFactory
 import com.example.kai.business.data.cache.FakeArticleCacheDataSourceImpl
 import com.example.kai.business.data.cache.abstraction.ArticleCacheDataSource
 import com.example.kai.business.data.network.FakeArticleNetworkDataSourceImpl
@@ -11,13 +12,24 @@ class DependencyContainer {
 
     lateinit var articleCacheDataSource: ArticleCacheDataSource
     lateinit var articleNetworkDataSource: ArticleNetworkDataSource
+    lateinit var articleDataFactory: ArticleDataFactory
+
+    private var articlesData: HashMap<String, Article> = HashMap()
 
     fun build() {
+        this.javaClass.classLoader?.let {
+            articleDataFactory = ArticleDataFactory(it)
+
+            // fake data set
+            articlesData = articleDataFactory.produceHashMapOfArticles(
+                articleDataFactory.produceListOfArticles()
+            )
+        }
         articleCacheDataSource = FakeArticleCacheDataSourceImpl(
             articlesData = HashMap()
         )
         articleNetworkDataSource = FakeArticleNetworkDataSourceImpl(
-            createEmptyArticleHashMap()
+            articlesData
         )
     }
 
