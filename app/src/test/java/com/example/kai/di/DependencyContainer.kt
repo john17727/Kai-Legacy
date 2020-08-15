@@ -33,11 +33,11 @@ class DependencyContainer {
         )
     }
 
-    fun getFullNetworkDataSource(): ArticleNetworkDataSource {
-        return FakeArticleNetworkDataSourceImpl(
-            createArticleHashMap()
-        )
-    }
+//    fun getFullNetworkDataSource(): ArticleNetworkDataSource {
+//        return FakeArticleNetworkDataSourceImpl(
+//            createArticleHashMap()
+//        )
+//    }
 
     fun getEmptyNetworkDataSource(): ArticleNetworkDataSource {
         return FakeArticleNetworkDataSourceImpl(
@@ -49,23 +49,23 @@ class DependencyContainer {
         return HashMap()
     }
 
-    private fun createArticleHashMap(): HashMap<String, Article> {
-        val articlesData = HashMap<String, Article>()
-        for (i in 0..20) {
-            articlesData[i.toString()] = Article(
-                Source(
-                    "$i",
-                    "name $i"
-                ),
-                "author $i",
-                "title $i",
-                "desc $i",
-                "url $i",
-                "urlToImage $i",
-                "publishedAt $i",
-                "content $i"
-            )
-        }
-        return articlesData
-    }
+//    private fun createArticleHashMap(): HashMap<String, Article> {
+//        val articlesData = HashMap<String, Article>()
+//        for (i in 0..20) {
+//            articlesData[i.toString()] = Article(
+//                Source(
+//                    "$i",
+//                    "name $i"
+//                ),
+//                "author $i",
+//                "title $i",
+//                "desc $i",
+//                "url $i",
+//                "urlToImage $i",
+//                "publishedAt $i",
+//                "content $i"
+//            )
+//        }
+//        return articlesData
+//    }
 }
