@@ -13,5 +13,4 @@ data class Article(
     val urlToImage: String,
     val publishedAt: String,
     val content: String
-): Parcelable {
-}
+): Parcelable

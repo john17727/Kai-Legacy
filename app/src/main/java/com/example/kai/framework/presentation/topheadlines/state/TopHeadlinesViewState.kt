@@ -11,5 +11,4 @@ data class TopHeadlinesViewState(
     var articleList: ArrayList<Article>? = null,
     var page: Int? = null,
     var numArticles: Int? = null
-): Parcelable, ViewState {
-}
+): Parcelable, ViewState
