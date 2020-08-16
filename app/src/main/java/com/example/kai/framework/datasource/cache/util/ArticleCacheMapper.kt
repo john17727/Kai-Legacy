@@ -3,7 +3,7 @@ package com.example.kai.framework.datasource.cache.util
 import com.example.kai.business.domain.model.Article
 import com.example.kai.business.domain.util.DateUtil
 import com.example.kai.business.domain.util.EntityMapper
-import com.example.kai.framework.datasource.cache.model.ArticleEntity
+import com.example.kai.framework.datasource.cache.model.ArticleCacheEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,9 +13,9 @@ class ArticleCacheMapper
 constructor(
     private val dateUtil: DateUtil,
     private val sourceCacheMapper: SourceCacheMapper
-): EntityMapper<ArticleEntity, Article> {
+): EntityMapper<ArticleCacheEntity, Article> {
 
-    fun mapFromEntityList(entities: List<ArticleEntity>): List<Article> {
+    fun mapFromEntityList(entities: List<ArticleCacheEntity>): List<Article> {
         val list = ArrayList<Article>()
         for (entity in entities) {
             list.add(mapFromEntity(entity))
@@ -23,15 +23,15 @@ constructor(
         return list
     }
 
-    fun mapToEntityList(models: List<Article>): List<ArticleEntity> {
-        val list = ArrayList<ArticleEntity>()
+    fun mapToEntityList(models: List<Article>): List<ArticleCacheEntity> {
+        val list = ArrayList<ArticleCacheEntity>()
         for (model in models) {
             list.add(mapToEntity(model))
         }
         return list
     }
 
-    override fun mapFromEntity(entity: ArticleEntity): Article {
+    override fun mapFromEntity(entity: ArticleCacheEntity): Article {
         return Article(
             source = sourceCacheMapper.mapFromEntity(entity.source),
             author = entity.author,
@@ -45,8 +45,8 @@ constructor(
         )
     }
 
-    override fun mapToEntity(model: Article): ArticleEntity {
-        return ArticleEntity(
+    override fun mapToEntity(model: Article): ArticleCacheEntity {
+        return ArticleCacheEntity(
             articleId = 0,
             source = sourceCacheMapper.mapToEntity(model.source),
             author = model.author,
