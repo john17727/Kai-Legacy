@@ -9,4 +9,6 @@ interface ArticleCacheDataSource {
     suspend fun insertArticles(articles: List<Article>): LongArray
 
     suspend fun searchArticles(query: String, page: Int): List<Article>
+
+    suspend fun getArticles(): List<Article>
 }

@@ -20,4 +20,6 @@ constructor(
         query: String,
         page: Int
     ) = articleDaoService.searchArticles(query, page)
+
+    override suspend fun getArticles() = articleDaoService.getArticles()
 }

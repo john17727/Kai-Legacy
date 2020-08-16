@@ -10,7 +10,10 @@ import com.example.kai.framework.datasource.cache.model.ArticleEntity
 interface ArticleDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertArticles(articles: List<ArticleEntity>)
+    suspend fun insertArticle(article: ArticleEntity): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertArticles(articles: List<ArticleEntity>): LongArray
 
     @Query("SELECT * FROM Articles")
     suspend fun getArticles(): List<ArticleEntity>

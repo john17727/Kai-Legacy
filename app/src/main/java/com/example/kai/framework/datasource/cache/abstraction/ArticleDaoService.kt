@@ -8,5 +8,8 @@ interface ArticleDaoService {
 
     suspend fun insertArticles(articles: List<Article>): LongArray
 
+    // Might delete this later
     suspend fun searchArticles(query: String, page: Int): List<Article>
+
+    suspend fun getArticles(): List<Article>
 }
