@@ -2,11 +2,10 @@ package com.example.kai.business.interactors.topheadlines
 
 import com.example.kai.business.data.cache.abstraction.ArticleCacheDataSource
 import com.example.kai.business.data.network.ApiResponseHandler
-import com.example.kai.business.data.network.ApiResult
 import com.example.kai.business.data.network.abstraction.ArticleNetworkDataSource
 import com.example.kai.business.data.util.safeApiCall
-import com.example.kai.business.domain.model.Article
 import com.example.kai.business.domain.model.ArticleResponse
+import com.example.kai.framework.datasource.network.model.ArticleResponseEntity
 import com.example.kai.business.domain.state.*
 import com.example.kai.framework.presentation.topheadlines.state.TopHeadlinesViewState
 import kotlinx.coroutines.Dispatchers.IO
