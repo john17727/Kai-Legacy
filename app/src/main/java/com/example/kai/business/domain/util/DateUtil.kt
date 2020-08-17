@@ -9,10 +9,12 @@ import javax.inject.Singleton
 @Singleton
 class DateUtil
 @Inject
-constructor(){
+constructor(
+    private val dateTimeFormatter: DateTimeFormatter
+){
 
     // date format: yyyy-MM-dd'T'HH:mm:ss'Z'
-    private val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
+//    private val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
 
     fun getPublishTimeSpan(dateTime: String): String {
         val now = LocalDateTime.now()
