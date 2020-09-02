@@ -18,4 +18,8 @@ constructor(
     override suspend fun searchArticles(query: String, page: Int): List<Article> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun getArticles(): List<Article> {
+        TODO("Not yet implemented")
+    }
 }

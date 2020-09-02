@@ -1,6 +1,5 @@
 package com.example.kai.business.data.network
 
-import com.example.kai.business.data.cache.CacheErrors
 import com.example.kai.business.data.network.NetworkErrors.NETWORK_DATA_NULL
 import com.example.kai.business.data.network.NetworkErrors.NETWORK_ERROR
 import com.example.kai.business.domain.state.*
