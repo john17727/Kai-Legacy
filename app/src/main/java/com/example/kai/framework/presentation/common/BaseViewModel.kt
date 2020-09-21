@@ -5,9 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kai.business.data.util.GenericErrors
 import com.example.kai.business.domain.state.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
+@ExperimentalCoroutinesApi
+@FlowPreview
 abstract class BaseViewModel<ViewState> : ViewModel() {
     private val _viewState: MutableLiveData<ViewState> = MutableLiveData()
 

@@ -6,7 +6,6 @@ import com.example.kai.business.domain.state.DataState
 import com.example.kai.business.interactors.topheadlines.GetTopHeadlines.Companion.ARTICLES_SUCCESS
 import com.example.kai.business.interactors.topheadlines.GetTopHeadlines.Companion.NO_MORE_ARTICLES
 import com.example.kai.di.DependencyContainer
-import com.example.kai.framework.presentation.topheadlines.state.TopHeadlinesStateEvent
 import com.example.kai.framework.presentation.topheadlines.state.TopHeadlinesStateEvent.*
 import com.example.kai.framework.presentation.topheadlines.state.TopHeadlinesViewState
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -49,7 +48,7 @@ class GetTopHeadlinesTest {
         getTopHeadlines.getTopHeadlines(
             "us",
             1,
-            GetTopHeadlinesEvent()
+            GetTopHeadlinesEvent("us", 1)
         ).collect(object : FlowCollector<DataState<TopHeadlinesViewState>>{
             override suspend fun emit(value: DataState<TopHeadlinesViewState>) {
                 assertEquals(
@@ -71,7 +70,7 @@ class GetTopHeadlinesTest {
         getTopHeadlines.getTopHeadlines(
             "us",
             1,
-            GetTopHeadlinesEvent()
+            GetTopHeadlinesEvent("us", 1)
         ).collect(object : FlowCollector<DataState<TopHeadlinesViewState>>{
             override suspend fun emit(value: DataState<TopHeadlinesViewState>) {
                 assertEquals(
