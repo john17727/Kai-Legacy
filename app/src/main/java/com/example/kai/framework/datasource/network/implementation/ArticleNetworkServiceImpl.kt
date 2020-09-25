@@ -11,9 +11,18 @@ import javax.inject.Singleton
 @Singleton
 class ArticleNetworkServiceImpl
 @Inject
-constructor(private val articleApiService: ArticleApiService, private val articleResponseMapper: ArticleResponseMapper) : ArticleNetworkService {
+constructor(
+    private val articleApiService: ArticleApiService,
+    private val articleResponseMapper: ArticleResponseMapper
+) : ArticleNetworkService {
 
     override suspend fun getTopHeadlines(country: String, page: Int): ArticleResponse {
-        return articleResponseMapper.mapFromEntity(articleApiService . getTopHeadlines (TOKEN, country, page))
+        return articleResponseMapper.mapFromEntity(
+            articleApiService.getTopHeadlines(
+                TOKEN,
+                country,
+                page
+            )
+        )
     }
 }

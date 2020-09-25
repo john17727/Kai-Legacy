@@ -2,10 +2,15 @@ package com.example.kai.di
 
 import com.example.kai.Kai
 import com.example.kai.MainActivity
+import com.example.kai.framework.presentation.topheadlines.TopHeadlinesFragment
 import dagger.BindsInstance
 import dagger.Component
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import javax.inject.Singleton
 
+@ExperimentalCoroutinesApi
+@FlowPreview
 @Singleton
 @Component(
     modules = [
@@ -23,4 +28,6 @@ interface AppComponent {
     }
 
     fun inject(mainActivity: MainActivity)
+
+    fun inject(topHeadlinesFragment: TopHeadlinesFragment)
 }
