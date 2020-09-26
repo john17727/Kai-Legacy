@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Kai" parent="Theme.MaterialComponents.DayNight">
-        <item name="colorPrimary">@color/White</item>
-        <item name="colorPrimaryVariant">@color/White</item>
-        <item name="android:colorPrimaryDark">@color/White</item>
+    <style name="Kai.DayNight" parent="Theme.Kai"/>
+    
+    <style name="Theme.Kai" parent="Base.Kai">
+        <item name="colorPrimary">@color/Kai_White</item>
+        <item name="colorPrimaryVariant">@color/Kai_White</item>
+        <item name="android:colorPrimaryDark">@color/Kai_White</item>
         <item name="colorSecondary">@color/Kai_Orange</item>
         <item name="colorSecondaryVariant">@color/Kai_Orange</item>
+    </style>
 
-        <item name="android:statusBarColor">@color/White</item>
+    <style name="Base.Kai" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:statusBarColor">?colorSurface</item>
         <item name="android:windowLightStatusBar">true</item>
 
-        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:navigationBarColor">?colorSurface</item>
         <item name="android:windowLightNavigationBar">true</item>
+
+        <item name="android:colorPrimaryDark">?colorPrimary</item>
+        <item name="colorAccent">?colorSecondary</item>
     </style>
 </resources>
