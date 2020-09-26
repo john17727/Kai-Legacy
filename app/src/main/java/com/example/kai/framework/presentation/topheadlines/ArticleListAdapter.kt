@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kai.R
 import com.example.kai.business.domain.model.Article
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_article.view.*
 
 class ArticleListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -47,6 +48,7 @@ class ArticleListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: Article) = with(itemView) {
+            if (item.urlToImage.isNotEmpty()) Picasso.get().load(item.urlToImage).into(articleImage)
             articleTitle.text = item.title
             articleAuthor.text = item.author
             articleDescription.text = item.description
