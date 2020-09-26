@@ -1,5 +1,6 @@
 package com.example.kai.framework.presentation.common
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,6 +20,7 @@ abstract class BaseViewModel<ViewState> : ViewModel() {
         object : DataChannelManager<ViewState>() {
 
             override fun handleNewData(data: ViewState) {
+                Log.d("TopHeadlines", "handleNewData: $data")
                 this@BaseViewModel.handleNewData(data)
             }
         }

@@ -34,14 +34,14 @@ constructor(
     override fun mapFromEntity(entity: ArticleNetworkEntity): Article {
         return Article(
             source = sourceNetworkMapper.mapFromEntity(entity.source),
-            author = entity.author,
+            author = entity.author?:"",
             title = entity.title,
-            description = entity.description,
+            description = entity.description?:"",
             url = entity.url,
-            urlToImage = entity.urlToImage,
+            urlToImage = entity.urlToImage?:"",
             publishedAt = entity.publishedAt,
             timeSincePublished = dateUtil.getPublishTimeSpan(entity.publishedAt),
-            content = entity.content
+            content = entity.content?:""
         )
     }
 

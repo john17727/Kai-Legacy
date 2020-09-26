@@ -1,5 +1,6 @@
 package com.example.kai.business.interactors.topheadlines
 
+import android.util.Log
 import com.example.kai.business.data.cache.abstraction.ArticleCacheDataSource
 import com.example.kai.business.data.network.ApiResponseHandler
 import com.example.kai.business.data.network.abstraction.ArticleNetworkDataSource
@@ -25,6 +26,7 @@ class GetTopHeadlines(
         val apiResult = safeApiCall(IO) {
             articleNetworkDataSource.getTopHeadlines(country, page)
         }
+//        Log.d("TopHeadlines", "getTopHeadlines: $apiResult")
 
         val response = object : ApiResponseHandler<TopHeadlinesViewState, ArticleResponse>(
             response = apiResult,

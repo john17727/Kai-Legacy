@@ -5,8 +5,12 @@ import androidx.fragment.app.FragmentFactory
 import androidx.lifecycle.ViewModelProvider
 import com.example.kai.business.domain.util.DateUtil
 import com.example.kai.framework.presentation.topheadlines.TopHeadlinesFragment
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
+@FlowPreview
 class NewsFragmentFactory
 @Inject
 constructor(

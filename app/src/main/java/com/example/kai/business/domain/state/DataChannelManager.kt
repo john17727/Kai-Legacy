@@ -1,5 +1,6 @@
 package com.example.kai.business.domain.state
 
+import android.util.Log
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -62,7 +63,17 @@ abstract class DataChannelManager<ViewState> {
             jobFunction
                 .onEach { dataState ->
                     dataState?.let { dState ->
-                        offerToDataChannel(dState)
+                        withContext(Main) {
+                            dataState.data?.let { data ->
+                                handleNewData(data)
+                            }
+                            dataState.stateMessage?.let { stateMessage ->
+                                handleNewStateMessage(stateMessage)
+                            }
+                            dataState.stateEvent?.let { stateEvent ->
+                                removeStateEvent(stateEvent)
+                            }
+                        }
                     }
                 }
                 .launchIn(getChannelScope())
@@ -101,6 +112,7 @@ abstract class DataChannelManager<ViewState> {
 
     fun printStateMessages() {
         for (message in messageStack) {
+            Log.d("Temp", "printStateMessages: $message")
         }
     }
 
