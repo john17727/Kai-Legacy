@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.Kai" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">@color/White</item>
+        <item name="colorPrimaryVariant">@color/White</item>
+        <item name="android:colorPrimaryDark">@color/White</item>
+        <item name="colorSecondary">@color/Kai_Orange</item>
+        <item name="colorSecondaryVariant">@color/Kai_Orange</item>
 
+        <item name="android:statusBarColor">@color/White</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 </resources>
