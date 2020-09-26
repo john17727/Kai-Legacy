@@ -3,11 +3,13 @@ package com.example.kai.framework.presentation.topheadlines
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kai.R
 import com.example.kai.business.domain.model.Article
+import com.example.kai.framework.presentation.util.ViewExtensions.disable
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_article.view.*
 
@@ -50,8 +52,8 @@ class ArticleListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(item: Article) = with(itemView) {
             if (item.urlToImage.isNotEmpty()) Picasso.get().load(item.urlToImage).into(articleImage)
             articleTitle.text = item.title
-            articleAuthor.text = item.author
-            articleDescription.text = item.description
+            if (item.author.isNotEmpty()) articleAuthor.text = item.author else articleAuthor.disable()
+            if (item.description.isNotEmpty()) articleDescription.text = item.description else articleDescription.disable()
         }
     }
 }
