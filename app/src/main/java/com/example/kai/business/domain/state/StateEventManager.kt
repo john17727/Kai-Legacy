@@ -38,7 +38,7 @@ class StateEventManager {
 
     fun isStateEventActive(stateEvent: StateEvent): Boolean{
         for(eventName in activeStateEvents.keys){
-            if(stateEvent.eventName().equals(eventName)){
+            if(stateEvent.eventName() == eventName){
                 return true
             }
         }

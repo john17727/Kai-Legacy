@@ -1,6 +1,5 @@
 package com.example.kai.business.domain.state
 
-import android.util.Log
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -112,7 +111,7 @@ abstract class DataChannelManager<ViewState> {
 
     fun printStateMessages() {
         for (message in messageStack) {
-            Log.d("Temp", "printStateMessages: $message")
+            message.response
         }
     }
 
@@ -123,12 +122,12 @@ abstract class DataChannelManager<ViewState> {
 
     fun addStateEvent(stateEvent: StateEvent) = stateEventManager.addStateEvent(stateEvent)
 
-    fun removeStateEvent(stateEvent: StateEvent?) = stateEventManager.removeStateEvent(stateEvent)
+    private fun removeStateEvent(stateEvent: StateEvent?) = stateEventManager.removeStateEvent(stateEvent)
 
     private fun isStateEventActive(stateEvent: StateEvent) =
         stateEventManager.isStateEventActive(stateEvent)
 
-    fun isJobAlreadyActive(stateEvent: StateEvent): Boolean {
+    private fun isJobAlreadyActive(stateEvent: StateEvent): Boolean {
         return isStateEventActive(stateEvent)
     }
 
