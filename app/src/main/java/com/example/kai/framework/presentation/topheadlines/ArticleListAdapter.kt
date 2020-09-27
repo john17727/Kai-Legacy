@@ -8,12 +8,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kai.R
 import com.example.kai.business.domain.model.Article
-import com.example.kai.business.domain.util.DateUtil
 import com.example.kai.framework.presentation.util.ViewExtensions.disable
-import com.squareup.picasso.Picasso
+import com.example.kai.framework.presentation.util.ViewExtensions.load
 import kotlinx.android.synthetic.main.item_article.view.*
 
-class ArticleListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ArticleListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Article>() {
 
@@ -50,7 +49,7 @@ class ArticleListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: Article) = with(itemView) {
-            if (item.urlToImage.isNotEmpty()) Picasso.get().load(item.urlToImage).into(articleImage) else articleImage.disable()
+            articleImage.load(item.urlToImage)
             articleTitle.text = item.title
             if (item.source.name.isNotEmpty()) articleSource.text = item.source.name else articleSource.disable()
             articleTimeSpan.text = item.timeSincePublished

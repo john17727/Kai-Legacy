@@ -1,7 +1,10 @@
 package com.example.kai.framework.presentation.util
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.example.kai.R
 
 object ViewExtensions {
 
@@ -11,5 +14,9 @@ object ViewExtensions {
 
     fun View.disable() {
         this.visibility = View.GONE
+    }
+
+    fun ImageView.load(imageUrl: String) {
+        Glide.with(this).load(imageUrl).into(this)
     }
 }
