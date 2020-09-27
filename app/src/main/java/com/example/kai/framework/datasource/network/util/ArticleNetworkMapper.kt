@@ -35,7 +35,7 @@ constructor(
         return Article(
             source = sourceNetworkMapper.mapFromEntity(entity.source),
             author = entity.author?:"",
-            title = entity.title,
+            title = removeSourceTagFromTitle(entity.title),
             description = entity.description?:"",
             url = entity.url,
             urlToImage = entity.urlToImage?:"",
@@ -43,6 +43,14 @@ constructor(
             timeSincePublished = dateUtil.getPublishTimeSpan(entity.publishedAt),
             content = entity.content?:""
         )
+    }
+
+    private fun removeSourceTagFromTitle(title: String): String {
+        if (title.contains(" - ")) {
+            val hyphenTail = """\s-\s.*""".toRegex()
+            return hyphenTail.replace(title, "")
+        }
+        return title
     }
 
     override fun mapToEntity(model: Article): ArticleNetworkEntity {
