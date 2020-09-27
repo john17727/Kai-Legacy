@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kai.R
 import com.example.kai.business.domain.util.DateUtil
 import com.example.kai.framework.presentation.common.BaseNewsFragment
+import com.example.kai.framework.presentation.common.SpacingItemDecorator
 import com.example.kai.framework.presentation.topheadlines.state.TopHeadlinesStateEvent
 import kotlinx.android.synthetic.main.fragment_top_headlines.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -43,6 +44,8 @@ constructor(
     private fun setupRecycler() {
         topHeadlinesRecycler.apply {
             layoutManager = LinearLayoutManager(activity)
+
+            addItemDecoration(SpacingItemDecorator(32))
 
             topHeadlinesAdapter = ArticleListAdapter()
 

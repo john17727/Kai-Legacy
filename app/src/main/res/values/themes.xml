@@ -8,6 +8,10 @@
         <item name="android:colorPrimaryDark">@color/Kai_White</item>
         <item name="colorSecondary">@color/Kai_Orange</item>
         <item name="colorSecondaryVariant">@color/Kai_Orange</item>
+
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Kai.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Kai.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Kai.LargeComponent</item>
     </style>
 
     <style name="Base.Kai" parent="Theme.MaterialComponents.DayNight">
