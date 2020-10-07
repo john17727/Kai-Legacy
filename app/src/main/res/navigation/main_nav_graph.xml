@@ -9,5 +9,18 @@
         android:id="@+id/topHeadlinesFragment"
         android:name="com.example.kai.framework.presentation.topheadlines.TopHeadlinesFragment"
         android:label="fragment_top_headlines"
-        tools:layout="@layout/fragment_top_headlines" />
+        tools:layout="@layout/fragment_top_headlines" >
+        <action
+            android:id="@+id/action_topHeadlinesFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/articleFragment"
+        android:name="com.example.kai.framework.presentation.article.ArticleFragment"
+        android:label="fragment_article"
+        tools:layout="@layout/fragment_article" >
+        <argument
+            android:name="articleUrl"
+            app:argType="string" />
+    </fragment>
 </navigation>

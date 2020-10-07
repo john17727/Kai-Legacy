@@ -12,7 +12,7 @@ import com.example.kai.framework.presentation.util.ViewExtensions.disable
 import com.example.kai.framework.presentation.util.ViewExtensions.load
 import kotlinx.android.synthetic.main.item_article.view.*
 
-class ArticleListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ArticleListAdapter(private val articleSelectedListener: ArticleSelectedListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Article>() {
 
@@ -29,7 +29,7 @@ class ArticleListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_article, parent, false)
-        return ArticleViewHolder(view)
+        return ArticleViewHolder(view, articleSelectedListener)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -46,7 +46,7 @@ class ArticleListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         differ.submitList(list)
     }
 
-    class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ArticleViewHolder(itemView: View, private val articleSelectedListener: ArticleSelectedListener) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: Article) = with(itemView) {
             articleImage.load(item.urlToImage)
@@ -54,6 +54,14 @@ class ArticleListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             if (item.source.name.isNotEmpty()) articleSource.text = item.source.name else articleSource.disable()
             articleTimeSpan.text = item.timeSincePublished
             if (item.description.isNotEmpty()) articleDescription.text = item.description else articleDescription.disable()
+
+            setOnClickListener {
+                articleSelectedListener.onArticleClick(item.url)
+            }
         }
+    }
+
+    interface ArticleSelectedListener {
+        fun onArticleClick(articleUrl: String)
     }
 }
