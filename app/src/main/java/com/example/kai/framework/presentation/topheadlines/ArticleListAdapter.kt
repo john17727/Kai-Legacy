@@ -43,6 +43,9 @@ class ArticleListAdapter(private val articleSelectedListener: ArticleSelectedLis
     }
 
     fun submitList(list: List<Article>) {
+//        val currentList = ArrayList<Article>()
+//        currentList.addAll(differ.currentList.toList())
+//        currentList.addAll(list)
         differ.submitList(list)
     }
 

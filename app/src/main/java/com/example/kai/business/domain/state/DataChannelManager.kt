@@ -1,5 +1,6 @@
 package com.example.kai.business.domain.state
 
+import android.util.Log
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -19,29 +20,29 @@ abstract class DataChannelManager<ViewState> {
 
     val shouldDisplayProgressBar = stateEventManager.shouldDisplayProgressBar
 
-    fun setupChannel() {
-        cancelJobs()
-        initChannel()
-    }
+//    fun setupChannel() {
+//        cancelJobs()
+//        initChannel()
+//    }
 
-    private fun initChannel() {
-        dataChannel
-            .asFlow()
-            .onEach { dataState ->
-                withContext(Main) {
-                    dataState.data?.let { data ->
-                        handleNewData(data)
-                    }
-                    dataState.stateMessage?.let { stateMessage ->
-                        handleNewStateMessage(stateMessage)
-                    }
-                    dataState.stateEvent?.let { stateEvent ->
-                        removeStateEvent(stateEvent)
-                    }
-                }
-            }
-            .launchIn(getChannelScope())
-    }
+//    private fun initChannel() {
+//        dataChannel
+//            .asFlow()
+//            .onEach { dataState ->
+//                withContext(Main) {
+//                    dataState.data?.let { data ->
+//                        handleNewData(data)
+//                    }
+//                    dataState.stateMessage?.let { stateMessage ->
+//                        handleNewStateMessage(stateMessage)
+//                    }
+//                    dataState.stateEvent?.let { stateEvent ->
+//                        removeStateEvent(stateEvent)
+//                    }
+//                }
+//            }
+//            .launchIn(getChannelScope())
+//    }
 
     abstract fun handleNewData(data: ViewState)
 
@@ -58,6 +59,7 @@ abstract class DataChannelManager<ViewState> {
         jobFunction: Flow<DataState<ViewState>?>
     ) {
         if (canExecuteNewStateEvent(stateEvent)) {
+            Log.d("Temp", "launchJob: can execute")
             addStateEvent(stateEvent)
             jobFunction
                 .onEach { dataState ->

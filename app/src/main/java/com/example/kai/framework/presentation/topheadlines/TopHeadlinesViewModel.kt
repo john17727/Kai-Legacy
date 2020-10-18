@@ -1,6 +1,7 @@
 package com.example.kai.framework.presentation.topheadlines
 
 import android.content.SharedPreferences
+import android.util.Log
 import com.example.kai.business.domain.model.Article
 import com.example.kai.business.domain.state.DataState
 import com.example.kai.business.domain.state.StateEvent
@@ -20,12 +21,16 @@ constructor(
     private val topHeadlinesInteractors: TopHeadlinesInteractors,
     private val editor: SharedPreferences.Editor,
     private val sharedPreferences: SharedPreferences
-): BaseViewModel<TopHeadlinesViewState>(){
+) : BaseViewModel<TopHeadlinesViewState>() {
 
     override fun handleNewData(data: TopHeadlinesViewState) {
         data.let { viewState ->
             viewState.articleList?.let { articleList ->
                 setHeadlinesListData(articleList)
+            }
+
+            viewState.numArticles?.let {
+                setTotalArticles(it)
             }
         }
     }
@@ -33,9 +38,10 @@ constructor(
     override fun setStateEvent(stateEvent: StateEvent) {
         val job: Flow<DataState<TopHeadlinesViewState>?> = when (stateEvent) {
             is GetTopHeadlinesEvent -> {
+                Log.d("Temp", "setStateEvent: ${getPage()}")
                 topHeadlinesInteractors.getTopHeadlines.getTopHeadlines(
                     country = stateEvent.country,
-                    page = stateEvent.page,
+                    page = getPage(),
                     stateEvent = stateEvent
                 )
             }
@@ -59,12 +65,28 @@ constructor(
     // for debugging
     fun getActiveJobs() = dataChannelManager.getActiveJobs()
 
-    fun isPaginationExhausted() = getHeadlinesListSize() >= getTotalHeadLines()
+    fun isPaginationExhausted(): Boolean {
+        Log.d(
+            "Temp",
+            "Top Headlines: ${getHeadlinesListSize()}, TotalHeadlines: ${getTotalHeadLines()}"
+        )
+        return getHeadlinesListSize() >= getTotalHeadLines()
+    }
 
 
     private fun setHeadlinesListData(headlines: ArrayList<Article>) {
         val update = getCurrentViewStateOrNew()
-        update.articleList = headlines
+        if (update.articleList == null) {
+            update.articleList = headlines
+        } else {
+            update.articleList?.addAll(headlines)
+        }
+        setViewState(update)
+    }
+
+    private fun setTotalArticles(total: Int) {
+        val update = getCurrentViewStateOrNew()
+        update.numArticles = total
         setViewState(update)
     }
 
@@ -80,10 +102,11 @@ constructor(
         setViewState(update)
     }
 
-    fun incrementPageNumber() {
+    private fun incrementPageNumber() {
         val update = getCurrentViewStateOrNew()
-        val page = update.page?: 1
+        val page = update.page ?: 1
         update.page = page.plus(1)
+        Log.d("Temp", "incrementPageNumber: ${update.page}")
         setViewState(update)
     }
 
@@ -94,10 +117,11 @@ constructor(
     }
 
     fun nextPage() {
+        Log.d("Temp", "nextPage")
         if (!isPaginationExhausted()) {
+            Log.d("Temp", "Not Exhausted")
             incrementPageNumber()
             setStateEvent(GetTopHeadlinesEvent("us", 1))
         }
     }
-
 }

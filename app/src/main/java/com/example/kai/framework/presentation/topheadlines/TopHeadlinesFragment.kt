@@ -1,12 +1,14 @@
 package com.example.kai.framework.presentation.topheadlines
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.kai.R
 import com.example.kai.business.domain.util.DateUtil
 import com.example.kai.framework.presentation.common.BaseNewsFragment
@@ -41,7 +43,7 @@ constructor(
         getTopHeadlines()
 
         topHeadlinesRefresh.setOnRefreshListener {
-            getTopHeadlines()
+//            getTopHeadlines()
         }
     }
 
@@ -55,10 +57,23 @@ constructor(
 
             adapter = topHeadlinesAdapter
         }
+
+        topHeadlinesRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val lastPosition = layoutManager.findLastVisibleItemPosition()
+                if (lastPosition == topHeadlinesAdapter.itemCount.minus(1)) {
+                    Log.d("Temp", "onScrolled: nextPage")
+                    viewModel.nextPage()
+                }
+            }
+        })
     }
 
     private fun setupObservers() {
         viewModel.viewState.observe(viewLifecycleOwner, { viewState ->
+            Log.d("Temp", "ViewState Observer")
             if (viewState != null) {
                 viewState.articleList?.let {
                     topHeadlinesAdapter.submitList(it)
@@ -75,7 +90,7 @@ constructor(
     }
 
     private fun getTopHeadlines() {
-        viewModel.setStateEvent(TopHeadlinesStateEvent.GetTopHeadlinesEvent("us", 1))
+        viewModel.loadFirstPage()
     }
 
     override fun inject() {

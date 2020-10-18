@@ -36,7 +36,7 @@ abstract class BaseViewModel<ViewState> : ViewModel() {
         return dataChannelManager.messageStack.size
     }
 
-    fun setupChannel() = dataChannelManager.setupChannel()
+//    fun setupChannel() = dataChannelManager.setupChannel()
 
     abstract fun handleNewData(data: ViewState)
 
