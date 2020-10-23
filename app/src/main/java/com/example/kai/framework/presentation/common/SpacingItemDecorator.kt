@@ -16,6 +16,6 @@ class SpacingItemDecorator(private val spacing: Int) : RecyclerView.ItemDecorati
         super.getItemOffsets(outRect, view, parent, state)
         outRect.left = spacing
         outRect.right = spacing
-        outRect.bottom = spacing
+        outRect.top = spacing
     }
 }

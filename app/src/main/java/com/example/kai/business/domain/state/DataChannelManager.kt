@@ -20,39 +20,7 @@ abstract class DataChannelManager<ViewState> {
 
     val shouldDisplayProgressBar = stateEventManager.shouldDisplayProgressBar
 
-//    fun setupChannel() {
-//        cancelJobs()
-//        initChannel()
-//    }
-
-//    private fun initChannel() {
-//        dataChannel
-//            .asFlow()
-//            .onEach { dataState ->
-//                withContext(Main) {
-//                    dataState.data?.let { data ->
-//                        handleNewData(data)
-//                    }
-//                    dataState.stateMessage?.let { stateMessage ->
-//                        handleNewStateMessage(stateMessage)
-//                    }
-//                    dataState.stateEvent?.let { stateEvent ->
-//                        removeStateEvent(stateEvent)
-//                    }
-//                }
-//            }
-//            .launchIn(getChannelScope())
-//    }
-
     abstract fun handleNewData(data: ViewState)
-
-    private fun offerToDataChannel(dataState: DataState<ViewState>) {
-        dataChannel.let {
-            if (!it.isClosedForSend) {
-                it.offer(dataState)
-            }
-        }
-    }
 
     fun launchJob(
         stateEvent: StateEvent,
