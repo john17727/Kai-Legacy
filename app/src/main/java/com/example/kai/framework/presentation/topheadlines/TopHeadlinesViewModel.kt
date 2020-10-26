@@ -25,12 +25,12 @@ constructor(
 
     override fun handleNewData(data: TopHeadlinesViewState) {
         data.let { viewState ->
-            viewState.articleList?.let { articleList ->
-                setHeadlinesListData(articleList)
-            }
-
             viewState.numArticles?.let {
                 setTotalArticles(it)
+            }
+
+            viewState.articleList?.let { articleList ->
+                setHeadlinesListData(articleList)
             }
         }
     }

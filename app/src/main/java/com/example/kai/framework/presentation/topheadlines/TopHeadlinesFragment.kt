@@ -79,13 +79,16 @@ constructor(
                     topHeadlinesAdapter.submitList(it)
                 }
             }
-            topHeadlinesRefresh.isRefreshing = false
         })
 
         viewModel.stateMessage.observe(viewLifecycleOwner, { stateMessage ->
             stateMessage?.let {
                 viewModel.clearStateMessage()
             }
+        })
+
+        viewModel.shouldDisplayProgressBar.observe(viewLifecycleOwner, { displayProgressbar ->
+            topHeadlinesRefresh.isRefreshing = displayProgressbar
         })
     }
 

@@ -1,5 +1,6 @@
 package com.example.kai.framework.presentation.topheadlines
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,9 +44,8 @@ class ArticleListAdapter(private val articleSelectedListener: ArticleSelectedLis
     }
 
     fun submitList(list: List<Article>) {
-//        val currentList = ArrayList<Article>()
-//        currentList.addAll(differ.currentList.toList())
-//        currentList.addAll(list)
+        Log.d("Who", "submitList")
+        Log.d("Who", "setupObservers: ${list.size}")
         differ.submitList(list)
     }
 
