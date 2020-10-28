@@ -24,14 +24,12 @@ constructor(
 ) : BaseViewModel<TopHeadlinesViewState>() {
 
     override fun handleNewData(data: TopHeadlinesViewState) {
-        data.let { viewState ->
-            viewState.numArticles?.let {
-                setTotalArticles(it)
-            }
+        data.numArticles?.let {
+            setTotalArticles(it)
+        }
 
-            viewState.articleList?.let { articleList ->
-                setHeadlinesListData(articleList)
-            }
+        data.articleList?.let { articleList ->
+            setHeadlinesListData(articleList)
         }
     }
 
@@ -76,18 +74,20 @@ constructor(
 
     private fun setHeadlinesListData(headlines: ArrayList<Article>) {
         val update = getCurrentViewStateOrNew()
-        if (update.articleList == null) {
-            update.articleList = headlines
-        } else {
-            update.articleList?.addAll(headlines)
-        }
+//        if (update.articleList == null) {
+        update.articleList = headlines
+//        } else {
+//            update.articleList?.addAll(headlines)
+//        }
         setViewState(update)
     }
 
     private fun setTotalArticles(total: Int) {
         val update = getCurrentViewStateOrNew()
-        update.numArticles = total
-        setViewState(update)
+        if (update.numArticles != total) {
+            update.numArticles = total
+            setViewState(update)
+        }
     }
 
     fun setArticlesExhausted(isExhausted: Boolean) {

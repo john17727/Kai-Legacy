@@ -73,11 +73,11 @@ constructor(
 
     private fun setupObservers() {
         viewModel.viewState.observe(viewLifecycleOwner, { viewState ->
-            Log.d("Temp", "ViewState Observer")
-            if (viewState != null) {
-                viewState.articleList?.let {
-                    topHeadlinesAdapter.submitList(it)
-                }
+            viewState.articleList?.let {
+                Log.d("TopHeadlines", "setupObservers: ViewState")
+                // toList() is used here to create a new list since submitlist
+                // won't update the recyclerview if the list has same reference.
+                topHeadlinesAdapter.submitList(it.toList())
             }
         })
 
@@ -101,7 +101,8 @@ constructor(
     }
 
     override fun onArticleClick(articleUrl: String) {
-        val action = TopHeadlinesFragmentDirections.actionTopHeadlinesFragmentToArticleFragment(articleUrl)
+        val action =
+            TopHeadlinesFragmentDirections.actionTopHeadlinesFragmentToArticleFragment(articleUrl)
         navController.navigate(action)
     }
 }

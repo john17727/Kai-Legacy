@@ -22,24 +22,21 @@ abstract class DataChannelManager<ViewState> {
 
     abstract fun handleNewData(data: ViewState)
 
-    fun launchJob(
-        stateEvent: StateEvent,
-        jobFunction: Flow<DataState<ViewState>?>
-    ) {
+    fun launchJob(stateEvent: StateEvent, jobFunction: Flow<DataState<ViewState>?>) {
         if (canExecuteNewStateEvent(stateEvent)) {
             Log.d("Temp", "launchJob: can execute")
             addStateEvent(stateEvent)
             jobFunction
                 .onEach { dataState ->
-                    dataState?.let { dState ->
+                    dataState?.let { allData ->
                         withContext(Main) {
-                            dataState.data?.let { data ->
+                            allData.data?.let { data ->
                                 handleNewData(data)
                             }
-                            dataState.stateMessage?.let { stateMessage ->
+                            allData.stateMessage?.let { stateMessage ->
                                 handleNewStateMessage(stateMessage)
                             }
-                            dataState.stateEvent?.let { stateEvent ->
+                            allData.stateEvent?.let { stateEvent ->
                                 removeStateEvent(stateEvent)
                             }
                         }
@@ -92,7 +89,8 @@ abstract class DataChannelManager<ViewState> {
 
     fun addStateEvent(stateEvent: StateEvent) = stateEventManager.addStateEvent(stateEvent)
 
-    private fun removeStateEvent(stateEvent: StateEvent?) = stateEventManager.removeStateEvent(stateEvent)
+    private fun removeStateEvent(stateEvent: StateEvent?) =
+        stateEventManager.removeStateEvent(stateEvent)
 
     private fun isStateEventActive(stateEvent: StateEvent) =
         stateEventManager.isStateEventActive(stateEvent)

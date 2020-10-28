@@ -5,6 +5,7 @@ import com.example.kai.business.data.cache.abstraction.ArticleCacheDataSource
 import com.example.kai.business.data.network.ApiResponseHandler
 import com.example.kai.business.data.network.abstraction.ArticleNetworkDataSource
 import com.example.kai.business.data.util.safeApiCall
+import com.example.kai.business.domain.model.Article
 import com.example.kai.business.domain.model.ArticleResponse
 import com.example.kai.business.domain.state.*
 import com.example.kai.framework.presentation.topheadlines.state.TopHeadlinesViewState
@@ -16,6 +17,8 @@ class GetTopHeadlines(
     private val articleCacheDataSource: ArticleCacheDataSource,
     private val articleNetworkDataSource: ArticleNetworkDataSource
 ) {
+
+    val articleList: ArrayList<Article> = arrayListOf()
 
     fun getTopHeadlines(country: String, page: Int, stateEvent: StateEvent): Flow<DataState<TopHeadlinesViewState>> = flow {
         var updatedPage = page
@@ -40,6 +43,8 @@ class GetTopHeadlines(
                     message = NO_MORE_ARTICLES
                 }
 
+                articleList.addAll(resultObj.articles)
+
                 return DataState.data(
                     response = Response(
                         message = message,
@@ -47,7 +52,7 @@ class GetTopHeadlines(
                         messageType = MessageType.Success
                     ),
                     data = TopHeadlinesViewState(
-                        articleList = ArrayList(resultObj.articles),
+                        articleList = articleList,
                         page = updatedPage,
                         numArticles = resultObj.totalResults
                     ),

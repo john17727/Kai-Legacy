@@ -67,10 +67,8 @@ abstract class BaseViewModel<ViewState> : ViewModel() {
         )
     }
 
-    fun launchJob(
-        stateEvent: StateEvent,
-        jobFunction: Flow<DataState<ViewState>?>
-    ) = dataChannelManager.launchJob(stateEvent, jobFunction)
+    fun launchJob(stateEvent: StateEvent, jobFunction: Flow<DataState<ViewState>?>) =
+        dataChannelManager.launchJob(stateEvent, jobFunction)
 
     fun getCurrentViewStateOrNew(): ViewState {
         return viewState.value ?: initNewViewState()
