@@ -43,7 +43,7 @@ constructor(
         getTopHeadlines()
 
         topHeadlinesRefresh.setOnRefreshListener {
-//            getTopHeadlines()
+            getTopHeadlines()
         }
     }
 

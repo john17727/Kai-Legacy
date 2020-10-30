@@ -26,6 +26,8 @@ class GetTopHeadlines(
             updatedPage = 1
         }
 
+        if (page == 1) articleList.clear() // Quick fix for list appending on refresh. Might want to look for new implementation of list appending
+
         val apiResult = safeApiCall(IO) {
             articleNetworkDataSource.getTopHeadlines(country, page)
         }
