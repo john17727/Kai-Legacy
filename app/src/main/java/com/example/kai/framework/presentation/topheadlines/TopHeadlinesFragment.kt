@@ -1,7 +1,6 @@
 package com.example.kai.framework.presentation.topheadlines
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -14,7 +13,6 @@ import com.example.kai.business.domain.util.DateUtil
 import com.example.kai.framework.presentation.common.BaseNewsFragment
 import com.example.kai.framework.presentation.common.SpacingItemDecorator
 import com.example.kai.framework.presentation.topheadlines.ArticleListAdapter.ArticleSelectedListener
-import com.example.kai.framework.presentation.topheadlines.state.TopHeadlinesStateEvent
 import kotlinx.android.synthetic.main.fragment_top_headlines.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -33,6 +31,18 @@ constructor(
         viewModelFactory
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Need to initialize the adapter here because onViewCreated gets called every time
+        // that this fragment is popped from the backstack resetting the adapter and clearing
+        // the recycler's position.
+        topHeadlinesAdapter = ArticleListAdapter(this)
+
+        // Also make the call for the topHeadlines here for the same reason as above.
+        getTopHeadlines()
+
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -40,7 +50,6 @@ constructor(
 
         setupRecycler()
         setupObservers()
-        getTopHeadlines()
 
         topHeadlinesRefresh.setOnRefreshListener {
             getTopHeadlines()
@@ -53,8 +62,6 @@ constructor(
 
             addItemDecoration(SpacingItemDecorator(32))
 
-            topHeadlinesAdapter = ArticleListAdapter(this@TopHeadlinesFragment)
-
             adapter = topHeadlinesAdapter
         }
 
@@ -64,7 +71,6 @@ constructor(
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                 val lastPosition = layoutManager.findLastVisibleItemPosition()
                 if (lastPosition == topHeadlinesAdapter.itemCount.minus(1)) {
-                    Log.d("Temp", "onScrolled: nextPage")
                     viewModel.nextPage()
                 }
             }
@@ -74,10 +80,11 @@ constructor(
     private fun setupObservers() {
         viewModel.viewState.observe(viewLifecycleOwner, { viewState ->
             viewState.articleList?.let {
-                Log.d("TopHeadlines", "setupObservers: ViewState")
-                // toList() is used here to create a new list since submitlist
-                // won't update the recyclerview if the list has same reference.
-                topHeadlinesAdapter.submitList(it.toList())
+                if (it.isNotEmpty()) {
+                    // toList() is used here to create a new list since submitlist
+                    // won't update the recyclerview if the list has same reference.
+                    topHeadlinesAdapter.submitList(it.toList())
+                }
             }
         })
 
