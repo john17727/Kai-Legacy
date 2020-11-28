@@ -14,7 +14,7 @@
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Kai.LargeComponent</item>
     </style>
 
-    <style name="Base.Kai" parent="Theme.MaterialComponents.DayNight">
+    <style name="Base.Kai" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:statusBarColor">?colorSurface</item>
         <item name="android:windowLightStatusBar">true</item>
 
