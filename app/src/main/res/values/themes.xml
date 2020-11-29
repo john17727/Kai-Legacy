@@ -23,5 +23,12 @@
 
         <item name="android:colorPrimaryDark">?colorPrimary</item>
         <item name="colorAccent">?colorSecondary</item>
+
+        <item name="textAppearanceHeadline5">@style/TextAppearance.Kai.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.Kai.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.Kai.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.Kai.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.Kai.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.Kai.Body2</item>
     </style>
 </resources>
