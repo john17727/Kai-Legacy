@@ -39,6 +39,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="8dp"
             android:gravity="end"
+            android:textStyle="normal"
             android:textAppearance="?textAppearanceSubtitle1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/articleSource"
