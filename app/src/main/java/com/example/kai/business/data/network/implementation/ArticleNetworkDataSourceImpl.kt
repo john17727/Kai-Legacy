@@ -11,5 +11,5 @@ class ArticleNetworkDataSourceImpl
 constructor(
     private val articleNetworkService: ArticleNetworkService
 ): ArticleNetworkDataSource {
-    override suspend fun getTopHeadlines(country: String, page: Int) = articleNetworkService.getTopHeadlines(country, page)
+    override suspend fun getTopHeadlines(country: String, page: Int, category: String) = articleNetworkService.getTopHeadlines(country, page, category)
 }

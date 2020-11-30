@@ -5,6 +5,6 @@ import com.example.kai.framework.datasource.network.model.ArticleResponseEntity
 
 interface ArticleNetworkDataSource {
 
-    suspend fun getTopHeadlines(country: String, page: Int): ArticleResponse
+    suspend fun getTopHeadlines(country: String, page: Int, category: String): ArticleResponse
 
 }

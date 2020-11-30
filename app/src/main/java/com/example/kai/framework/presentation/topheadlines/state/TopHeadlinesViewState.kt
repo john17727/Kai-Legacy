@@ -10,6 +10,7 @@ data class TopHeadlinesViewState(
 
     var articleList: ArrayList<Article>? = null,
     var page: Int? = null,
+    var category: String = "general",
     var numArticles: Int? = null,
     var areArticlesExhausted: Boolean = false
 ): Parcelable, ViewState

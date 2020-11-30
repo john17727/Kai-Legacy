@@ -11,6 +11,7 @@ interface ArticleApiService {
     suspend fun getTopHeadlines(
         @Header("Authorization") token: String,
         @Query("country") country: String,
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("category") category: String
     ): ArticleResponseEntity
 }
