@@ -42,8 +42,6 @@ constructor(
         // the recycler's position.
         topHeadlinesAdapter = ArticleListAdapter(this)
 
-        linearLayoutManager = LinearLayoutManager(activity)
-
         // Also make the call for the topHeadlines here for the same reason as above.
         getTopHeadlines("general")
 
@@ -78,6 +76,8 @@ constructor(
 
     private fun setupRecycler() {
         topHeadlinesRecycler.apply {
+
+            linearLayoutManager = LinearLayoutManager(activity)
             layoutManager = linearLayoutManager
 
             addItemDecoration(SpacingItemDecorator(32))
