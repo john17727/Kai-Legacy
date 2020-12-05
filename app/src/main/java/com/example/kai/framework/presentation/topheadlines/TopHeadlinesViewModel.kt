@@ -40,7 +40,8 @@ constructor(
                 topHeadlinesInteractors.getTopHeadlines.getTopHeadlines(
                     country = stateEvent.country,
                     page = getPage(),
-                    stateEvent = stateEvent
+                    stateEvent = stateEvent,
+                    category = getCategory()
                 )
             }
             else -> {
@@ -59,6 +60,8 @@ constructor(
     fun getHeadlinesListSize() = getCurrentViewStateOrNew().articleList?.size ?: 0
 
     fun getTotalHeadLines() = getCurrentViewStateOrNew().numArticles ?: 0
+
+    fun getCategory() = getCurrentViewStateOrNew().category
 
     // for debugging
     fun getActiveJobs() = dataChannelManager.getActiveJobs()
@@ -110,10 +113,17 @@ constructor(
         setViewState(update)
     }
 
-    fun loadFirstPage() {
+    private fun setCategory(category: String) {
+        val update = getCurrentViewStateOrNew()
+        update.category = category
+        setViewState(update)
+    }
+
+    fun loadFirstPage(category: String) {
         setArticlesExhausted(false)
         resetPage()
-        setStateEvent(GetTopHeadlinesEvent("us", 1))
+        setCategory(category)
+        setStateEvent(GetTopHeadlinesEvent("us", 1, "general"))
     }
 
     fun nextPage() {
@@ -121,7 +131,7 @@ constructor(
         if (!isPaginationExhausted()) {
             Log.d("Temp", "Not Exhausted")
             incrementPageNumber()
-            setStateEvent(GetTopHeadlinesEvent("us", 1))
+            setStateEvent(GetTopHeadlinesEvent("us", 1, "general"))
         }
     }
 }

@@ -20,7 +20,7 @@ class GetTopHeadlines(
 
     val articleList: ArrayList<Article> = arrayListOf()
 
-    fun getTopHeadlines(country: String, page: Int, stateEvent: StateEvent): Flow<DataState<TopHeadlinesViewState>> = flow {
+    fun getTopHeadlines(country: String, page: Int, category: String, stateEvent: StateEvent): Flow<DataState<TopHeadlinesViewState>> = flow {
         var updatedPage = page
         if (page <= 0) {
             updatedPage = 1
@@ -29,7 +29,7 @@ class GetTopHeadlines(
         if (page == 1) articleList.clear() // Quick fix for list appending on refresh. Might want to look for new implementation of list appending
 
         val apiResult = safeApiCall(IO) {
-            articleNetworkDataSource.getTopHeadlines(country, page)
+            articleNetworkDataSource.getTopHeadlines(country, page, category)
         }
 //        Log.d("TopHeadlines", "getTopHeadlines: $apiResult")
 

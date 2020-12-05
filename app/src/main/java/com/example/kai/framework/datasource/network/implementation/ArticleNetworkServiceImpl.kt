@@ -16,12 +16,13 @@ constructor(
     private val articleResponseMapper: ArticleResponseMapper
 ) : ArticleNetworkService {
 
-    override suspend fun getTopHeadlines(country: String, page: Int): ArticleResponse {
+    override suspend fun getTopHeadlines(country: String, page: Int, category: String): ArticleResponse {
         return articleResponseMapper.mapFromEntity(
             articleApiService.getTopHeadlines(
                 TOKEN,
                 country,
-                page
+                page,
+                category
             )
         )
     }
