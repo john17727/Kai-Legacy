@@ -2,19 +2,17 @@ package com.example.kai.framework.presentation.topheadlines
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kai.R
-import com.example.kai.business.domain.util.DateUtil
-import com.example.kai.framework.presentation.common.BaseNewsFragment
 import com.example.kai.framework.presentation.common.SpacingItemDecorator
 import com.example.kai.framework.presentation.topheadlines.ArticleListAdapter.ArticleSelectedListener
 import com.example.kai.util.Extensions.toLowerCase
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_top_headlines.*
 import kotlinx.android.synthetic.main.item_filters.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -22,18 +20,13 @@ import kotlinx.coroutines.FlowPreview
 
 @FlowPreview
 @ExperimentalCoroutinesApi
-class TopHeadlinesFragment
-constructor(
-    private val viewModelFactory: ViewModelProvider.Factory,
-    private val dateUtil: DateUtil
-) : BaseNewsFragment(R.layout.fragment_top_headlines), ArticleSelectedListener {
+@AndroidEntryPoint
+class TopHeadlinesFragment : Fragment(R.layout.fragment_top_headlines), ArticleSelectedListener {
 
     private lateinit var navController: NavController
     private lateinit var topHeadlinesAdapter: ArticleListAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private val viewModel: TopHeadlinesViewModel by viewModels {
-        viewModelFactory
-    }
+    private val viewModel: TopHeadlinesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,10 +118,6 @@ constructor(
 
     private fun getTopHeadlines(category: String) {
         viewModel.loadFirstPage(category)
-    }
-
-    override fun inject() {
-        getAppComponent().inject(this)
     }
 
     override fun onArticleClick(articleUrl: String) {
