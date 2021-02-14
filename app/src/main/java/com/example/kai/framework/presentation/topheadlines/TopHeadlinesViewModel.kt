@@ -1,27 +1,26 @@
 package com.example.kai.framework.presentation.topheadlines
 
-import android.content.SharedPreferences
 import android.util.Log
 import com.example.kai.business.domain.model.Article
 import com.example.kai.business.domain.state.DataState
 import com.example.kai.business.domain.state.StateEvent
 import com.example.kai.business.interactors.topheadlines.TopHeadlinesInteractors
 import com.example.kai.framework.presentation.common.BaseViewModel
-import com.example.kai.framework.presentation.topheadlines.state.TopHeadlinesStateEvent
 import com.example.kai.framework.presentation.topheadlines.state.TopHeadlinesStateEvent.GetTopHeadlinesEvent
 import com.example.kai.framework.presentation.topheadlines.state.TopHeadlinesViewState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @FlowPreview
+@HiltViewModel
 class TopHeadlinesViewModel
-constructor(
-    private val topHeadlinesInteractors: TopHeadlinesInteractors,
-    private val editor: SharedPreferences.Editor,
-    private val sharedPreferences: SharedPreferences
-) : BaseViewModel<TopHeadlinesViewState>() {
+@Inject
+constructor(private val topHeadlinesInteractors: TopHeadlinesInteractors) :
+    BaseViewModel<TopHeadlinesViewState>() {
 
     override fun handleNewData(data: TopHeadlinesViewState) {
         data.numArticles?.let {

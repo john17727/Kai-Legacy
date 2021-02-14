@@ -10,6 +10,8 @@ import com.example.kai.framework.datasource.network.service.ArticleApiService
 import com.example.kai.framework.datasource.preferences.PreferenceKeys
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import retrofit2.Retrofit
@@ -18,6 +20,7 @@ import javax.inject.Singleton
 @ExperimentalCoroutinesApi
 @FlowPreview
 @Module
+@InstallIn(SingletonComponent::class)
 object ProductionModule {
 
     @JvmStatic

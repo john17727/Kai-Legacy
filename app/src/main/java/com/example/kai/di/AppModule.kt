@@ -1,6 +1,8 @@
 package com.example.kai.di
 
+import android.content.Context
 import android.content.SharedPreferences
+import com.example.kai.Kai
 import com.example.kai.business.data.cache.abstraction.ArticleCacheDataSource
 import com.example.kai.business.data.cache.implementation.ArticleCacheDataSourceImpl
 import com.example.kai.business.data.network.abstraction.ArticleNetworkDataSource
@@ -25,22 +27,31 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.format.DateTimeFormatter
 import javax.inject.Singleton
 
 @Module
+@InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @JvmStatic
+    @Singleton
+    @Provides
+    fun provideApplication(@ApplicationContext kai: Context): Kai {
+        return kai as Kai
+    }
+
     @Singleton
     @Provides
     fun provideGsonBuilder(): Gson {
         return GsonBuilder().create()
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideRetrofitBuilder(gson: Gson): Retrofit.Builder {
@@ -49,28 +60,24 @@ object AppModule {
     }
 
     // date format: yyyy-MM-dd'T'HH:mm:ss'Z'
-    @JvmStatic
     @Singleton
     @Provides
     fun provideDateTimeFormatter(): DateTimeFormatter {
         return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideDateUtil(dateTimeFormatter: DateTimeFormatter): DateUtil {
         return DateUtil(dateTimeFormatter)
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideSharedPrefsEditor(sharedPreferences: SharedPreferences): SharedPreferences.Editor {
         return sharedPreferences.edit()
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideArticleDao(articleDatabase: ArticleDatabase): ArticleDao {
@@ -87,14 +94,12 @@ object AppModule {
         return ArticleCacheMapper(dateUtil, sourceCacheMapper)
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideSourceCacheMapper(): SourceCacheMapper {
         return SourceCacheMapper()
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideArticleNetworkMapper(
@@ -104,21 +109,18 @@ object AppModule {
         return ArticleNetworkMapper(dateUtil, sourceNetworkMapper)
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideArticleResponseMapper(articleNetworkMapper: ArticleNetworkMapper): ArticleResponseMapper {
         return ArticleResponseMapper(articleNetworkMapper)
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideSourceNetworkMapper(): SourceNetworkMapper {
         return SourceNetworkMapper()
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideArticleDaoService(
@@ -128,14 +130,12 @@ object AppModule {
         return ArticleDaoServiceImpl(articleDao, articleCacheMapper)
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideArticleCacheDataSource(articleDaoService: ArticleDaoService): ArticleCacheDataSource {
         return ArticleCacheDataSourceImpl(articleDaoService)
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideArticleNetworkService(
@@ -145,14 +145,12 @@ object AppModule {
         return ArticleNetworkServiceImpl(articleApiService, articleResponseMapper)
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideArticleNetworkDataSource(articleNetworkService: ArticleNetworkService): ArticleNetworkDataSource {
         return ArticleNetworkDataSourceImpl(articleNetworkService)
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideGetTopHeadlines(
@@ -162,7 +160,6 @@ object AppModule {
         return GetTopHeadlines(articleCacheDataSource, articleNetworkDataSource)
     }
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideTopHeadlinesInteractors(getTopHeadlines: GetTopHeadlines): TopHeadlinesInteractors {
