@@ -8,6 +8,8 @@ import com.example.kai.business.data.cache.implementation.ArticleCacheDataSource
 import com.example.kai.business.data.network.abstraction.ArticleNetworkDataSource
 import com.example.kai.business.data.network.implementation.ArticleNetworkDataSourceImpl
 import com.example.kai.business.domain.util.DateUtil
+import com.example.kai.business.interactors.articledetails.ArticleDetailsInteractors
+import com.example.kai.business.interactors.articledetails.GetArticleDetails
 import com.example.kai.business.interactors.topheadlines.GetTopHeadlines
 import com.example.kai.business.interactors.topheadlines.TopHeadlinesInteractors
 import com.example.kai.framework.datasource.cache.abstraction.ArticleDaoService
@@ -19,16 +21,15 @@ import com.example.kai.framework.datasource.cache.util.SourceCacheMapper
 import com.example.kai.framework.datasource.network.abstraction.ArticleNetworkService
 import com.example.kai.framework.datasource.network.implementation.ArticleNetworkServiceImpl
 import com.example.kai.framework.datasource.network.service.ArticleApiService
-import com.example.kai.framework.datasource.network.util.ArticleNetworkMapper
-import com.example.kai.framework.datasource.network.util.ArticleResponseMapper
-import com.example.kai.framework.datasource.network.util.SourceNetworkMapper
-import com.example.kai.util.BASE_URL
+import com.example.kai.framework.datasource.network.service.ArticleDetailsApiService
+import com.example.kai.framework.datasource.network.util.*
+import com.example.kai.util.NEWS_BASE_URL
+import com.example.kai.util.SCRAPPER_BASE_URL
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
@@ -54,8 +55,17 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRetrofitBuilder(gson: Gson): Retrofit.Builder {
-        return Retrofit.Builder().baseUrl(BASE_URL)
+    @NewsAPI
+    fun provideNewsRetrofitBuilder(gson: Gson): Retrofit.Builder {
+        return Retrofit.Builder().baseUrl(NEWS_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+    }
+
+    @Singleton
+    @Provides
+    @ScrapperAPI
+    fun provideScrapperRetrofitBuilder(gson: Gson): Retrofit.Builder {
+        return Retrofit.Builder().baseUrl(SCRAPPER_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
     }
 
@@ -123,6 +133,18 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideArticleDetailsNetworkMapper(): ArticleDetailsNetworkMapper {
+        return ArticleDetailsNetworkMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideArticleDetailsResponseMapper(articleDetailsNetworkMapper: ArticleDetailsNetworkMapper): ArticleDetailsResponseMapper {
+        return ArticleDetailsResponseMapper(articleDetailsNetworkMapper)
+    }
+
+    @Singleton
+    @Provides
     fun provideArticleDaoService(
         articleDao: ArticleDao,
         articleCacheMapper: ArticleCacheMapper
@@ -140,9 +162,11 @@ object AppModule {
     @Provides
     fun provideArticleNetworkService(
         articleApiService: ArticleApiService,
-        articleResponseMapper: ArticleResponseMapper
+        articleResponseMapper: ArticleResponseMapper,
+        articleDetailsApiService: ArticleDetailsApiService,
+        articleDetailsResponseMapper: ArticleDetailsResponseMapper
     ): ArticleNetworkService {
-        return ArticleNetworkServiceImpl(articleApiService, articleResponseMapper)
+        return ArticleNetworkServiceImpl(articleApiService, articleResponseMapper, articleDetailsApiService, articleDetailsResponseMapper)
     }
 
     @Singleton
@@ -164,5 +188,19 @@ object AppModule {
     @Provides
     fun provideTopHeadlinesInteractors(getTopHeadlines: GetTopHeadlines): TopHeadlinesInteractors {
         return TopHeadlinesInteractors(getTopHeadlines)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetArticleDetails(
+        articleNetworkDataSource: ArticleNetworkDataSource
+    ): GetArticleDetails {
+        return GetArticleDetails(articleNetworkDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideArticleDetailsInteractors(getArticleDetails: GetArticleDetails): ArticleDetailsInteractors {
+        return ArticleDetailsInteractors(getArticleDetails)
     }
 }

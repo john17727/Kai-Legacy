@@ -35,7 +35,6 @@ constructor(private val topHeadlinesInteractors: TopHeadlinesInteractors) :
     override fun setStateEvent(stateEvent: StateEvent) {
         val job: Flow<DataState<TopHeadlinesViewState>?> = when (stateEvent) {
             is GetTopHeadlinesEvent -> {
-                Log.d("Temp", "setStateEvent: ${getPage()}")
                 topHeadlinesInteractors.getTopHeadlines.getTopHeadlines(
                     country = stateEvent.country,
                     page = getPage(),
