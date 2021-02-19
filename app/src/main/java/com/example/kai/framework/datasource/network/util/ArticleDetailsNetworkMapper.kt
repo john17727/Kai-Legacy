@@ -15,7 +15,8 @@ class ArticleDetailsNetworkMapper : EntityMapper<ArticleDetailsNetworkEntity, Ar
             entity.author,
             entity.images,
             entity.image,
-            entity.url
+            entity.url,
+            entity.html
         )
     }
 
@@ -26,7 +27,8 @@ class ArticleDetailsNetworkMapper : EntityMapper<ArticleDetailsNetworkEntity, Ar
             model.author,
             model.images,
             model.topImage?: "",
-            model.url
+            model.url,
+            model.html
         )
     }
 }

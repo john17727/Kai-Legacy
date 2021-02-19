@@ -6,5 +6,6 @@ data class ArticleDetailsNetworkEntity(
     val author: String,
     val images: List<String>,
     val image: String,
-    val url: String
+    val url: String,
+    val html: String
 )
