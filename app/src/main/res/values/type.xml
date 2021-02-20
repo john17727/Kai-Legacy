@@ -24,8 +24,8 @@
     </style>
 
     <style name="TextAppearance.Kai.Body1" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="fontFamily">@font/merriweather_light</item>
-        <item name="android:textColor">@color/Kai_Text_Default</item>
+<!--        <item name="fontFamily">@font/merriweather_light</item>-->
+        <item name="android:textColor">?colorOnBackground</item>
     </style>
 
     <style name="TextAppearance.Kai.Body2" parent="TextAppearance.MaterialComponents.Body2">

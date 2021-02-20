@@ -4,13 +4,9 @@ import androidx.room.Room
 import com.example.kai.framework.datasource.cache.database.ArticleDatabase
 import com.example.kai.framework.datasource.network.service.ArticleApiService
 import com.example.kai.framework.presentation.TestBaseApplication
-import com.example.kai.util.BASE_URL
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module

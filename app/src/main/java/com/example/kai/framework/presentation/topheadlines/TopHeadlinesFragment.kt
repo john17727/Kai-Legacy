@@ -1,6 +1,7 @@
 package com.example.kai.framework.presentation.topheadlines
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,6 +29,8 @@ class TopHeadlinesFragment : Fragment(R.layout.fragment_top_headlines), ArticleS
     private lateinit var linearLayoutManager: LinearLayoutManager
     private val viewModel: TopHeadlinesViewModel by viewModels()
 
+    private var isRefresh = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Need to initialize the adapter here because onViewCreated gets called every time
@@ -49,10 +52,11 @@ class TopHeadlinesFragment : Fragment(R.layout.fragment_top_headlines), ArticleS
         setupObservers()
 
         topHeadlinesRefresh.setOnRefreshListener {
+            isRefresh = true
             getTopHeadlines(viewModel.getCategory())
         }
 
-        category_chip_group.setOnCheckedChangeListener { _, checkedId ->
+        category_chip_group.setOnCheckedChangeListener { chip, checkedId ->
             val category = when (checkedId) {
                 business.id -> business.text
                 entertainment.id -> entertainment.text
@@ -60,10 +64,11 @@ class TopHeadlinesFragment : Fragment(R.layout.fragment_top_headlines), ArticleS
                 science.id -> science.text
                 sports.id -> sports.text
                 technology.id -> technology.text
-                else -> general.text
+                else -> null
             }
-//            Toast.makeText(activity, category.toLowerCase(), Toast.LENGTH_SHORT).show()
-            getTopHeadlines(category.toLowerCase().toString())
+            category?.let {
+                getTopHeadlines(it.toLowerCase().toString())
+            }
         }
     }
 
@@ -97,8 +102,9 @@ class TopHeadlinesFragment : Fragment(R.layout.fragment_top_headlines), ArticleS
                     // toList() is used here to create a new list since submitlist
                     // won't update the recyclerview if the list has same reference.
                     topHeadlinesAdapter.submitList(it.toList()) {
-                        if (viewModel.getPage() == 1) {
+                        if (viewModel.getPage() == 1 && isRefresh) {
                             linearLayoutManager.scrollToPosition(0)
+                            isRefresh = false
                         }
                     }
                 }

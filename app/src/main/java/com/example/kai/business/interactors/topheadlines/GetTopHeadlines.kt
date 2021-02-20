@@ -1,6 +1,5 @@
 package com.example.kai.business.interactors.topheadlines
 
-import android.util.Log
 import com.example.kai.business.data.cache.abstraction.ArticleCacheDataSource
 import com.example.kai.business.data.network.ApiResponseHandler
 import com.example.kai.business.data.network.abstraction.ArticleNetworkDataSource

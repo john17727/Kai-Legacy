@@ -7,6 +7,7 @@ import androidx.room.Room
 import com.example.kai.Kai
 import com.example.kai.framework.datasource.cache.database.ArticleDatabase
 import com.example.kai.framework.datasource.network.service.ArticleApiService
+import com.example.kai.framework.datasource.network.service.ArticleDetailsApiService
 import com.example.kai.framework.datasource.preferences.PreferenceKeys
 import dagger.Module
 import dagger.Provides
@@ -23,7 +24,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object ProductionModule {
 
-    @JvmStatic
     @Singleton
     @Provides
     fun provideArticleDB(app: Kai): ArticleDatabase {
@@ -31,14 +31,18 @@ object ProductionModule {
             .fallbackToDestructiveMigration().build()
     }
 
-    @JvmStatic
     @Singleton
     @Provides
-    fun provideArticleApiService(retrofitBuilder: Retrofit.Builder): ArticleApiService {
+    fun provideArticleApiService(@NewsAPI retrofitBuilder: Retrofit.Builder): ArticleApiService {
         return retrofitBuilder.build().create(ArticleApiService::class.java)
     }
 
-    @JvmStatic
+    @Singleton
+    @Provides
+    fun provideArticleDetailsApiService(@ScrapperAPI retrofitBuilder: Retrofit.Builder): ArticleDetailsApiService {
+        return retrofitBuilder.build().create(ArticleDetailsApiService::class.java)
+    }
+
     @Singleton
     @Provides
     fun providesSharedPreferences(
